@@ -1,6 +1,5 @@
+ - The DuckHunt Background and two bird sprites are drawn using game.js
+ - I did not collaborate with anyone on this assignment
+ - This took me about 2 hours
 
-1. Identify what aspects of the work have been correctly implemented and what have not.
-2. Identify anyone with whom you have collaborated or discussed the assignment.
-3. Say approximately how many hours you have spent completing the assignment.
-
-
+ -*Notes* - the wait function is to be used with animation of the ducks, but I have an exam tomorrow, so I will not continue to work on this until after that exam.
