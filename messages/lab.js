@@ -17,5 +17,7 @@ function parse(){
 		//Step3: Trigger the HTTP request
 		//The argument for send() - data that you want to send to teh web server
 		request.send(null);
+		//test
+		
 }
 
