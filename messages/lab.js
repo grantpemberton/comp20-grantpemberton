@@ -1,6 +1,7 @@
-var request = new XMLHttpRequest();
 
 function parse() {
+	var request = new XMLHttpRequest();
+
 	//Step1: set up HTTP request. Three required arguments
 	//...HTTP method (string), URL (string), asynch (boolean) -> this will be false very few times
 	request.open("GET", "data.json", true); 
@@ -9,12 +10,13 @@ function parse() {
 	request.onreadystatechange = function(){
 		
 		if (request.readyState==4){
-			console.log("request complete!");
 			data = request.responseText;
-			//console.log(data);
-			chat = JSON.parse(data);
-			elem = document.getElementById("id");
-			elem.innerHTML = "<p>" chat[1, "content"] + chat [1,"username"] + "</p>";
+			elem = document.getElementById("chat");
+			data = JSON.parse(data);
+			//loop through chat window
+			for (i = 0; i < data.length; i++) {
+				elem.innerHTML +=  data[i]["content"] + " " + data[i]["username"] + "</p>";
+			}
 		}
 	};
 
