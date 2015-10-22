@@ -1,7 +1,5 @@
-Identify what aspects of the work have been correctly implemented and what have not.
+All parts of the lab were implemented successfully.
 
-Identify anyone with whom you have collaborated or discussed the assignment.
+I spoke with daniel baigel about how to successfully parse the json data -> data [i]["content"]. In earlier iterations of my program, I was confused about how to index the json file
 
-Say approximately how many hours you have spent completing the assignment.
-
-Be written in either text format (README.txt) or in Markdown (README.md). No other formats will be accepted.
+2 without interuption, but there was a point at which I erased my entire js file, so 3 in total

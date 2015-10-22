@@ -4,7 +4,7 @@ function parse() {
 
 	//Step1: set up HTTP request. Three required arguments
 	//...HTTP method (string), URL (string), asynch (boolean) -> this will be false very few times
-	request.open("GET", "data.json", true); 
+	request.open("GET", "http://messagehub.herokuapp.com/messages.json", true); 
 
 	//Step2: set up callback functionto deal with HTTP response data
 	request.onreadystatechange = function(){
@@ -25,5 +25,5 @@ function parse() {
 	//The argument for send() - data that you want to send to teh web server
 	request.send(null);
 
-	//Got executed 3 times -> readystate = a number between 0 and 4, this means that for each value we have a new return for
+	
 } 
