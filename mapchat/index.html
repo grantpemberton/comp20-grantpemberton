@@ -3,17 +3,113 @@
 <html>
 
 <head>
-	<meta charset="utf-8" />
-	<title>Messages</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+		<link rel="stylesheet" href="geolocation_map_style.css" />
+		<!-- change the css location-->
+	<title>Ermegerd MerpChert</title>
+	
 	<script>
+		var myLat = 0;
+		var myLng = 0;
+		var request = new XMLHttpRequest();
+		var me = new google.maps.LatLng(myLat, myLng);
+		var myOptions = {
+			zoom: 13, // The larger the zoom number, the bigger the zoom
+			center: me,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map;
+		var marker;
+		var infowindow = new google.maps.InfoWindow();
+			
+		function init(){
+				map = new google.maps.Map(document.getElementById("map_chat"), myOptions);
+				getMyLocation();
+		}
+			
+		function getMyLocation() {
+			if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
+				navigator.geolocation.getCurrentPosition(function(position) {
+					myLat = position.coords.latitude;
+					myLng = position.coords.longitude;
+					sendMyLocation(myLat, myLng);
+					renderMap();
+				});
+			}
+			else {
+				alert("Geolocation is not supported by your web browser. :(");
+			}
+		}
+
+		function sendMyLocation (MyLat, myLng){
+			request.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", false);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			request.onreadystatechange = function(){
+				if (request.readyState == 4) {
+					locations = JSON.parse(request.responseText);
+				}
+			}
+			request.send("login=RonCampbell&lat="+myLat+"&lng="+myLng+"&message=Hello is it me you're looking for");
+
+		}
+		
+		function renderMap()
+		{
+			me = new google.maps.LatLng(myLat, myLng);
+			
+			// Update map and go there...
+			map.panTo(me);
+					// Create a marker
+			marker = new google.maps.Marker({
+				position: me,
+				title: "This is meeeeee"
+			});
+			marker.setMap(map);
+			marker.setIcon("./marker.jpg")
+					
+			// Open info window on click of marker
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.setContent(marker.title);
+				infowindow.open(map, marker);
+			});
+
+			for (var i = 0; i < locations.length; i++){
+				someone_else = new google.maps.Marker({ 
+					position: new google.maps.LatLng(locations[i].lat, locations[i].lng),
+					title: locations[i].login+"<p>"+locations[i].message+"</p>"+"<p>"+getDistance(myLat, locations[i].lat, myLng, locations[i].lng)+"</p>"});
+				someone_else.setMat(map);
+
+				google.maps.event.addListener(someone_else, 'click', function(){
+					infowindow.setContent(this.title);
+					infowindow.open(map, this);
+				});
+			}
+		}
+
+		function getDistance(lat1, lat2, lng1, lng2){
+			Number.prototype.toRad = function() {
+				return this * Math.PI / 180;
+			}
+
+			var R = 6371/1.6;
+			var dist_ns = lat2-lat1;
+			dist_ns = dist_ns.toRad();
+			var dist_ew = lng2-lng1;
+			dist_ew = dist_ew.toRad();
+
+			var temp = Math.sin(dist_ns/2) * Math.sin(dist_ns/2) + Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * Math.sin(dist_ew/2) * Math.sin(dist_ew/2);
+			var real_dist = R * Math.atan2(Math.sqrt(temp), Math.sqrt(1-temp));
+			return real_dist;
+		}
 
 	</script>
-	<link rel="stylesheet" href="style.css" type="text/css" />
+
 </head>
 
-<body onload="parse()">
+<body onload="init()">
 	<h1>MapChat</h1>
-	<div id="messages"></div>
+	<div id="map_chat"></div>
 </body>
 
 </html>
