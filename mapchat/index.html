@@ -10,6 +10,8 @@
 	<title>Ermegerd MerpChert</title>
 	
 	<script>
+
+
 		var myLat = 0;
 		var myLng = 0;
 		var request = new XMLHttpRequest();
@@ -22,7 +24,8 @@
 		var map;
 		var marker;
 		var infowindow = new google.maps.InfoWindow();
-			
+		var locations;
+
 		function init(){
 				map = new google.maps.Map(document.getElementById("map_chat"), myOptions);
 				getMyLocation();
@@ -34,7 +37,6 @@
 					myLat = position.coords.latitude;
 					myLng = position.coords.longitude;
 					sendMyLocation(myLat, myLng);
-					renderMap();
 				});
 			}
 			else {
@@ -43,14 +45,16 @@
 		}
 
 		function sendMyLocation (MyLat, myLng){
-			request.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", false);
+			request.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", true);
 			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			request.onreadystatechange = function(){
 				if (request.readyState == 4) {
 					locations = JSON.parse(request.responseText);
+					renderMap();
 				}
 			}
-			request.send("login=RonCampbell&lat="+myLat+"&lng="+myLng+"&message=Hello is it me you're looking for");
+			request.send("login=RonCampbell&lat="+myLat+"&lng="+myLng+"&message=All my friends have birthdays this year!");
+
 
 		}
 		
@@ -63,7 +67,7 @@
 					// Create a marker
 			marker = new google.maps.Marker({
 				position: me,
-				title: "This is meeeeee"
+				title: "RonCampbell </br> All my friends have birthdays this year!"
 			});
 			marker.setMap(map);
 			marker.setIcon("./marker.jpg")
@@ -78,7 +82,9 @@
 				someone_else = new google.maps.Marker({ 
 					position: new google.maps.LatLng(locations[i].lat, locations[i].lng),
 					title: locations[i].login+"<p>"+locations[i].message+"</p>"+"<p>"+getDistance(myLat, locations[i].lat, myLng, locations[i].lng)+"</p>"});
-				someone_else.setMat(map);
+				if (someone_else.title != "RonCampbell"){
+					someone_else.setMap(map);
+				}
 
 				google.maps.event.addListener(someone_else, 'click', function(){
 					infowindow.setContent(this.title);
