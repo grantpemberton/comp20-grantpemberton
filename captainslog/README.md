@@ -4,4 +4,4 @@ I spoke briefly to Carly Reilly about some suggestions that a TA had for the cod
 
 I spent about 2 hours on this lab
 
-I'd like to take another look at this code before the second quiz.
+I'd like to take another look at this code before the second quiz. Also sorry for the lateness, I have had alot on my plate :(
