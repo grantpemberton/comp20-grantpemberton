@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Captain's Log</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script>
+	  $("document").ready(function(){
+	  	var keycode = event.which;
+	  	if(keycode == '13'){
+	  		//if the enter key is pressed
+	  		var human_readable_time = new Date();
+	  		//creates new date in UTC
+	  		$('#log').text($(this).val());
+	  		//print the message that is in the box
+	  		$('#log').prepend(human_readable_time, ' ', '-', ' ');
+	  		//time goes before message
+	  		//something is wrong in the message printing :( I have to study for another class's exam
+	  	}
+	  });
+
+	</script>
+</head>
+
+<body>
+	<h1>Captain's Log</h1>
+	<h3>New entry: <input type="text" id="msg" name="msg" size="30" /></h3>
+	<div id="log"></div>
+</body>
+</html>
