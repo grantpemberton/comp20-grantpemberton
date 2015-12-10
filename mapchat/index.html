@@ -53,7 +53,7 @@
 					renderMap();
 				}
 			}
-			request.send("login=RonCampbell&lat="+myLat+"&lng="+myLng+"&message=<script> alert: You have been hacked! </script> ");
+			request.send("login=RonCampbell&lat="+myLat+"&lng="+myLng+"&message=<script> alert('You have been hacked!') </script> ");
 
 
 		}
@@ -67,7 +67,7 @@
 					// Create a marker
 			marker = new google.maps.Marker({
 				position: me,
-				title: "RonCampbell </br> <script> alert: You have been hacked! </script>"
+				title: "RonCampbell </br> <script> alert ('You have been hacked!) </script>"
 			});
 			marker.setMap(map);
 			marker.setIcon("./marker.png")
